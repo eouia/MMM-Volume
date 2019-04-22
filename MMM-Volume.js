@@ -19,6 +19,14 @@ Module.register("MMM-Volume", {
     //getVolumeScript: 'amixer sget \'Digital\' | grep -E -o \'[[:digit:]]+%\' | head -n 1| sed \'s/%//g\'', // get 0~100
     //setVolumeScript: 'amixer sset -M \'Digital\' #VOLUME#%', // set 0~100
 
+    // for RPI ALSA mixer with Seeed Respeaker 2-mic JST Speaker Connectors
+    //getVolumeScript: `amixer sget Speaker`,
+    //setVolumeScript: `amixer sset Speaker #VOLUME#%`, // set 0~100
+
+    // for RPI ALSA mixer with Seeed Respeaker 2-mic 3.5mm Audio Jack 
+    //getVolumeScript: `amixer sget Playback`,
+    //setVolumeScript: `amixer sset Playback #VOLUME#%`, // set 0~100  
+
     usePresetScript: "ALSA", // null or "OSX" or "ALSA", When set to `null`, `getVolumeScript` and `setVolumeScript` will be used directly.
     hideDelay: 2000, // 0 for showing always. over 0, After X millisec from showing, will be disappeared.
     upDownScale: 5,
@@ -40,18 +48,25 @@ Module.register("MMM-Volume", {
         setVolumeScript: `osascript -e 'set volume output volume #VOLUME#'` // set 0~100
       },
       "ALSA": {
-       getVolumeScript: `amixer sget 'PCM' | awk -F"[][]" '{print ""$2""}' | grep %  | awk '{gsub ( /%/, "" ) ; print}'`, // get 0~100
+        getVolumeScript: `amixer sget 'PCM' | awk -F"[][]" '{print ""$2""}' | grep %  | awk '{gsub ( /%/, "" ) ; print}'`, // get 0~100
         setVolumeScript: `amixer sset -M 'PCM' #VOLUME#%`, //set 0~100
       },
       "HIFIBERRY-DAC": {
         getVolumeScript: `amixer sget 'Digital' | grep -E -o '[[:digit:]]+%' | head -n 1| sed 's/%//g'`, // get 0~100
         setVolumeScript: `amixer sset -M 'Digital' #VOLUME#%`, // set 0~100
       },
- 	"PULSE": {
+ 	    "PULSE": {
         getVolumeScript: `amixer get Master  | awk -F"[][]" '{print ""$2""}' | grep %  | awk 'NR==1{print $1}' | awk '{gsub(/%/,"") ; print}'`, // get 0~100
         setVolumeScript: `amixer set Master #VOLUME#% -q`, // set 0~100
       },
-
+      "SPEAKER": {
+        getVolumeScript: `amixer sget Speaker`,
+        setVolumeScript: `amixer sset Speaker #VOLUME#%`, // set 0~100
+      },
+      "PLAYBACK": {
+        getVolumeScript: `amixer sget Playback`,
+        setVolumeScript: `amixer sset Playback #VOLUME#%`, // set 0~100
+      }, 
     },
 
     notifications: {
