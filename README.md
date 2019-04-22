@@ -3,7 +3,7 @@ Volume controller module is for Seeed Respeaker 2-mic voice card on MagicMirror.
 
 ## Screenshot
 ![Screenshot](https://github.com/xuepgao/MMM-Volume/blob/master/mmm-volume.png)
-
+![Screenshot](https://github.com/xuepgao/MMM-Volume/blob/master/respeaker_2mic.png)
 ## Install
 ```sh
 cd ~/MagicMirror/modules
