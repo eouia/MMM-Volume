@@ -1,13 +1,13 @@
 # MMM-Volume
-Volume controller for MagicMirror
+Volume controller module is for Seeed Respeaker 2-mic voice card on MagicMirror. This modules is forked from eouia/MMM-Volume. So if you plan to install the full version of the Volume controller module, please go to https://github.com/eouia/MMM-Volume
 
 ## Screenshot
-![Screenshot](https://raw.githubusercontent.com/eouia/MMM-Volume/master/mmm-volume.png)
+![Screenshot](https://github.com/xuepgao/MMM-Volume/blob/master/mmm-volume.png)
 
 ## Install
 ```sh
 cd ~/MagicMirror/modules
-git clone https://github.com/eouia/MMM-Volume
+git clone https://github.com/xuepgao/MMM-Volume.git
 ```
 
 ## Configuration
@@ -18,83 +18,15 @@ git clone https://github.com/eouia/MMM-Volume
   module: "MMM-Volume",
   position: "top_left", // It is meaningless. but you should set.
   config: {
-    usePresetScript: "ALSA", // "ALSA" is supported by default.
-    volumeOnStart: 50,
+    usePresetScript: "SPEAKER"(or "PLAYBACK"), 
+    // "SPEAKER" is for Seeed Respeaker 2-mic JST Speaker Connectors.
+    // "PLAYBACK" is for Seeed Respeaker 2-mic 3.5mm Audio Jack.
+    volumeOnStart: 80,   // The suitable volume of Seeed Respeaker 2-mic is about 80%.
   }
 },
 ```
 
-### Details & Defaults (For Experts)
-```js
-{
-  module: "MMM-Volume",
-  position: "top_left", // It is meaningless. but you should set.
-  config: {
-    usePresetScript: "ALSA",
-    // null or "OSX", "HIFIBERRY-DAC" or "ALSA", When set to `null`, `getVolumeScript` and `setVolumeScript` will be used directly. See the experts section.
 
-    upDownScale: 5,
-    // for VOLUME_UP or VOLUME_DOWN.
-
-    volumeOnStart: 10,
-    // If you set this, this volume will be applied on start of MagicMirror
-
-    volumeText: "Vol: #VOLUME#%",
-    // Showing volume.
-
-    hideDelay: 2000,
-    // After X milliseconds from showing, volume gain-meter will be disappeared.
-
-    fadeDelay: 200,
-    // If the volume is restored with a fade effect this time in milliseconds will be waited between to scales
-
-    telegramMessages: {
-      CUR_VOLUME : "Current Volume is *#VOLUME#*.",
-      SET_VOLUME : "Setting Volume to *#VOLUME#*",
-      INVALID : "Invalid parameters. `/vol` or `/vol 0~100` is allowed."
-    },
-
-    // Usually You might not need to modify belows; Only for Experts.
-
-    getVolumeScript: ``, //get 0~100
-    setVolumeScript: ``, //set 0~100
-    // volume control scripts for Other systems. If you set null to `usePresetScript`, these fields will be used instead.
-
-     presetScript: {
-      "OSX": {
-        getVolumeScript: `osascript -e 'output volume of (get volume settings)'`, // get 0~100
-        setVolumeScript: `osascript -e 'set volume output volume #VOLUME#'` // set 0~100
-      },
-      "ALSA": {
-       getVolumeScript: `amixer sget 'PCM' | awk -F"[][]" '{print ""$2""}' | grep %  | awk '{gsub ( /%/, "" ) ; print}'`, // get 0~100
-        setVolumeScript: `amixer sset -M 'PCM' #VOLUME#%`, //set 0~100
-      },
-      "HIFIBERRY-DAC": {
-        getVolumeScript: `amixer sget 'Digital' | grep -E -o '[[:digit:]]+%' | head -n 1| sed 's/%//g'`, // get 0~100
-        setVolumeScript: `amixer sset -M 'Digital' #VOLUME#%`, // set 0~100
-      },
- 	"PULSE": {
-        getVolumeScript: `amixer get Master  | awk -F"[][]" '{print ""$2""}' | grep %  | awk 'NR==1{print $1}' | awk '{gsub(/%/,"") ; print}'`, // get 0~100
-        setVolumeScript: `amixer set Master #VOLUME#% -q`, // set 0~100
-      },
-
-    },
-
-
-    notifications: {
-      VOLUME_GET : "VOLUME_GET",
-      VOLUME_SET : "VOLUME_SET",
-      VOLUME_UP : "VOLUME_UP",
-      VOLUME_DOWN: "VOLUME_DOWN",
-      VOLUME_STORE : "VOLUME_STORE",
-      VOLUME_RESTORE : "VOLUME_RESTORE",
-      VOLUME_TOGGLE : "VOLUME_TOGGLE",
-      CURRENT_VOLUME : "CURRENT_VOLUME",
-    },
-    // You can redefine notifications if you need.
-  }
-},
-```
 
 
 ## Usage
