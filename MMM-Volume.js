@@ -20,14 +20,14 @@ Module.register("MMM-Volume", {
     //setVolumeScript: 'amixer sset -M \'Digital\' #VOLUME#%', // set 0~100
 
     // for RPI ALSA mixer with Seeed Respeaker 2-mic JST Speaker Connectors
-    //getVolumeScript: `amixer sget Speaker`,
+    //getVolumeScript: `amixer sget Speaker | grep -E -o '[[:digit:]]+%' | head -n 1| sed 's/%//g'`, // get 0~100
     //setVolumeScript: `amixer sset Speaker #VOLUME#%`, // set 0~100
 
     // for RPI ALSA mixer with Seeed Respeaker 2-mic 3.5mm Audio Jack 
-    //getVolumeScript: `amixer sget Playback`,
+    //getVolumeScript: `amixer sget Playback | grep -E -o '[[:digit:]]+%' | head -n 1| sed 's/%//g'`, // get 0~100
     //setVolumeScript: `amixer sset Playback #VOLUME#%`, // set 0~100  
 
-    usePresetScript: "ALSA", // null or "OSX" or "ALSA", When set to `null`, `getVolumeScript` and `setVolumeScript` will be used directly.
+    usePresetScript: "ALSA", // null or "OSX" or "ALSA" or "HIFIBERRY-DAC" or "PULSE" or "Respeaker_Speaker" or "ReSpeaker_Playback", When set to `null`, `getVolumeScript` and `setVolumeScript` will be used directly.
     hideDelay: 2000, // 0 for showing always. over 0, After X millisec from showing, will be disappeared.
     upDownScale: 5,
     volumeOnStart: 10,
@@ -59,12 +59,12 @@ Module.register("MMM-Volume", {
         getVolumeScript: `amixer get Master  | awk -F"[][]" '{print ""$2""}' | grep %  | awk 'NR==1{print $1}' | awk '{gsub(/%/,"") ; print}'`, // get 0~100
         setVolumeScript: `amixer set Master #VOLUME#% -q`, // set 0~100
       },
-      "ReSpeaker_Speaker": {
-        getVolumeScript: `amixer sget Speaker`,
+      "Respeaker_Speaker": {
+        getVolumeScript: `amixer sget Speaker | grep -E -o '[[:digit:]]+%' | head -n 1| sed 's/%//g'`, // get 0~100
         setVolumeScript: `amixer sset Speaker #VOLUME#%`, // set 0~100
       },
       "ReSpeaker_Playback": {
-        getVolumeScript: `amixer sget Playback`,
+        getVolumeScript: `amixer sget Playback | grep -E -o '[[:digit:]]+%' | head -n 1| sed 's/%//g'`, // get 0~100
         setVolumeScript: `amixer sset Playback #VOLUME#%`, // set 0~100
       }, 
     },
