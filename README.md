@@ -18,10 +18,11 @@ git clone https://github.com/xuepgao/MMM-Volume.git
   module: "MMM-Volume",
   position: "top_left", // It is meaningless. but you should set.
   config: {
-    usePresetScript: "SPEAKER"(or "PLAYBACK"), 
-    // "SPEAKER" is for Seeed Respeaker 2-mic JST Speaker Connectors.
-    // "PLAYBACK" is for Seeed Respeaker 2-mic 3.5mm Audio Jack.
+    usePresetScript: "ReSpeaker_Speaker"(or "ReSpeaker_Playback"), 
+    // "ReSpeaker_Speaker" is for Seeed Respeaker 2-mic JST Speaker Connectors.
+    // "ReSpeaker_Playback" is for Seeed Respeaker 2-mic 3.5mm Audio Jack.
     volumeOnStart: 80,   // The suitable volume of Seeed Respeaker 2-mic is about 80%.
+    upDownScale: 5,
   }
 },
 ```
