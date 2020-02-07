@@ -103,8 +103,23 @@ git clone https://github.com/eouia/MMM-Volume
   }
 },
 ```
-
-
+### Note
+Simple/Detailed configuration described above should works for general environment.
+However, everybody might have a different environment, so if presetScript doesn't work, find proper command for your environment and use it.
+Below several examples for most common configurations.
+#### Raspberry Pi 3 B+ & clean Raspbian Buster instalation & external USB sound card
+```js
+{
+	module: "MMM-Volume",
+	position: "top_left", // It is meaningless. but you should set.
+	config: {
+		volumeOnStart: 10,
+		usePresetScript: null,
+		getVolumeScript: `amixer sget Speaker | awk -F"[][]" '{print ""$2""}' | grep %  | awk '{gsub ( /%/, "" ) ; print}'`,
+		setVolumeScript: `amixer sset -M Speaker #VOLUME#%`,
+	}
+},
+```
 ## Usage
 
 ### By `Notification`
