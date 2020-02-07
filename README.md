@@ -105,6 +105,7 @@ git clone https://github.com/eouia/MMM-Volume
 ```
 ### Note
 Simple/Detailed configuration described above should works for general environment.
+So start with that samples during your instalation.
 However, everybody might have a different environment, so if presetScript doesn't work, find proper command for your environment and use it.
 Below several examples for most common configurations.
 #### Raspberry Pi 3 B+ & clean Raspbian Buster instalation & external USB sound card
